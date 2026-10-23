@@ -1,0 +1,13 @@
+{
+  "domain": "pv_overview",
+  "name": "PV Übersicht",
+  "codeowners": ["@berwil84afk"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/berwil84afk/ha-pv-overview",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/berwil84afk/ha-pv-overview/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}
