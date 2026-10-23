@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up PV Overview",
+        "description": "Select the sensor reporting the current PV power (W or kW). Energy and statistics are calculated from it.",
+        "data": {
+          "name": "Name",
+          "source_entity": "PV power sensor",
+          "threshold": "Production time threshold",
+          "initial_total": "Initial total production"
+        },
+        "data_description": {
+          "threshold": "Time above this power counts as production time.",
+          "initial_total": "Optional: previous total production of your system in kWh."
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "A PV Overview already exists for this sensor."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "PV Overview options",
+        "data": {
+          "source_entity": "PV power sensor",
+          "threshold": "Production time threshold"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total": { "name": "Total production" },
+      "today": { "name": "Production today" },
+      "yesterday": { "name": "Production yesterday" },
+      "week": { "name": "Production this week" },
+      "month": { "name": "Production this month" },
+      "last_month": { "name": "Production last month" },
+      "year": { "name": "Production this year" },
+      "max_power_today": { "name": "Peak power today" },
+      "max_power_alltime": { "name": "Peak power record" },
+      "avg_power_today": { "name": "Average power today" },
+      "production_time_today": { "name": "Production time today" },
+      "avg_daily_7": { "name": "Avg daily production 7 days" },
+      "avg_daily_30": { "name": "Avg daily production 30 days" },
+      "avg_daily_365": { "name": "Avg daily production 365 days" },
+      "avg_daily_total": { "name": "Avg daily production overall" },
+      "best_day": { "name": "Best day" }
+    }
+  }
+}
