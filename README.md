@@ -1,3 +1,5 @@
+<img src="custom_components/pv_overview/brand/icon.png" alt="PV Übersicht" width="128" align="right">
+
 # PV Übersicht – Home Assistant Integration
 
 Du gibst nur **einen Sensor mit der aktuellen PV-Leistung** (W oder kW) an – die Integration rechnet daraus Energie und Statistiken.
@@ -23,6 +25,7 @@ Später änderbar über **Konfigurieren** an der Integration: Quellsensor und Sc
 
 | Sensor | Einheit | Beschreibung |
 |---|---|---|
+| Aktuelle Leistung | W | Leistung des Quellsensors in W (kW wird umgerechnet, negativ → 0) – Grundlage aller Berechnungen, sofort aktualisiert |
 | Gesamtproduktion | kWh | Fortlaufender Zähler – im **Energie-Dashboard** als Solarproduktion nutzbar |
 | Produktion heute / gestern | kWh | `gestern` hat Attribut `history` mit den letzten 30 Tagen |
 | Produktion diese Woche / dieser Monat / letzter Monat / dieses Jahr | kWh | `dieser Monat` hat Attribut `months` mit Monatswerten |
