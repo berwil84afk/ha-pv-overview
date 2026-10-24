@@ -33,6 +33,7 @@
   },
   "entity": {
     "sensor": {
+      "power": { "name": "Aktuelle Leistung" },
       "total": { "name": "Gesamtproduktion" },
       "today": { "name": "Produktion heute" },
       "yesterday": { "name": "Produktion gestern" },

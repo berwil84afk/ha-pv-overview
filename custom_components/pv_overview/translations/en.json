@@ -33,6 +33,7 @@
   },
   "entity": {
     "sensor": {
+      "power": { "name": "Current power" },
       "total": { "name": "Total production" },
       "today": { "name": "Production today" },
       "yesterday": { "name": "Production yesterday" },
