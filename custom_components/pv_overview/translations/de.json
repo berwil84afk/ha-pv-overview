@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "PV Übersicht einrichten",
+        "title": "PV Summary einrichten",
         "description": "Wähle den Sensor mit der aktuellen PV-Leistung (W oder kW). Daraus werden Energie und Statistiken berechnet.",
         "data": {
           "name": "Name",
@@ -17,13 +17,13 @@
       }
     },
     "abort": {
-      "already_configured": "Für diesen Sensor gibt es bereits eine PV Übersicht."
+      "already_configured": "Für diesen Sensor gibt es bereits eine PV Summary."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "PV Übersicht – Optionen",
+        "title": "PV Summary – Optionen",
         "data": {
           "source_entity": "PV-Leistungssensor",
           "threshold": "Schwelle für Produktionszeit"

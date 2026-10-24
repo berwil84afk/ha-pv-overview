@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Set up PV Overview",
+        "title": "Set up PV Summary",
         "description": "Select the sensor reporting the current PV power (W or kW). Energy and statistics are calculated from it.",
         "data": {
           "name": "Name",
@@ -17,13 +17,13 @@
       }
     },
     "abort": {
-      "already_configured": "A PV Overview already exists for this sensor."
+      "already_configured": "A PV Summary already exists for this sensor."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "PV Overview options",
+        "title": "PV Summary options",
         "data": {
           "source_entity": "PV power sensor",
           "threshold": "Production time threshold"
