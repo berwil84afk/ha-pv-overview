@@ -4,10 +4,10 @@
   "codeowners": ["@berwil84afk"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/berwil84afk/ha-pv-overview",
+  "documentation": "https://github.com/berwil84afk/ha-pv-summary",
   "integration_type": "service",
   "iot_class": "calculated",
-  "issue_tracker": "https://github.com/berwil84afk/ha-pv-overview/issues",
+  "issue_tracker": "https://github.com/berwil84afk/ha-pv-summary/issues",
   "requirements": [],
-  "version": "1.2.0"
+  "version": "1.2.1"
 }
