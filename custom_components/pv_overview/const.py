@@ -1,4 +1,4 @@
-"""Konstanten für PV Übersicht."""
+"""Konstanten für PV Summary."""
 
 from datetime import timedelta
 

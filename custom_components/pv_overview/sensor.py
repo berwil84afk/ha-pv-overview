@@ -1,4 +1,4 @@
-"""Sensoren der PV Übersicht."""
+"""Sensoren von PV Summary."""
 
 from __future__ import annotations
 
@@ -175,7 +175,7 @@ class PVOverviewSensor(SensorEntity):
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name=entry.title,
-            manufacturer="PV Übersicht",
+            manufacturer="PV Summary",
             model=tracker.source_entity,
             entry_type=DeviceEntryType.SERVICE,
         )

@@ -1,4 +1,4 @@
-"""Config Flow für PV Übersicht."""
+"""Config Flow für PV Summary."""
 
 from __future__ import annotations
 

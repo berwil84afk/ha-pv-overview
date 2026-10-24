@@ -1,4 +1,4 @@
-"""PV Übersicht – Statistiken aus einem einzelnen PV-Leistungssensor."""
+"""PV Summary –Statistiken aus einem einzelnen PV-Leistungssensor."""
 
 from __future__ import annotations
 
