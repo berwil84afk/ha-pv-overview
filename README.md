@@ -7,7 +7,7 @@ Du gibst nur **einen Sensor mit der aktuellen PV-Leistung** (W oder kW) an – d
 ## Installation über HACS
 
 1. HACS → Menü (⋮) → **Benutzerdefinierte Repositories**
-2. Repository `https://github.com/berwil84afk/ha-pv-overview`, Typ **Integration** → Hinzufügen
+2. Repository `https://github.com/berwil84afk/ha-pv-summary`, Typ **Integration** → Hinzufügen
 3. „PV Summary“ in HACS suchen → Herunterladen → Home Assistant neu starten
 4. **Einstellungen → Geräte & Dienste → Integration hinzufügen → „PV Summary“**
 
