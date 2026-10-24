@@ -97,6 +97,7 @@ class PVTracker:
         )
         self._last_time: datetime | None = None
         self._listeners: list[Callable[[], None]] = []
+        self._realtime_listeners: list[Callable[[], None]] = []
         self._unsubs: list[Callable[[], None]] = []
 
     # ------------------------------------------------------------------ Lifecycle
@@ -131,12 +132,16 @@ class PVTracker:
         await self._store.async_save(self.data)
 
     @callback
-    def async_add_listener(self, listener: Callable[[], None]) -> Callable[[], None]:
-        self._listeners.append(listener)
+    def async_add_listener(
+        self, listener: Callable[[], None], realtime: bool = False
+    ) -> Callable[[], None]:
+        """Listener registrieren; realtime = zusätzlich bei jeder Änderung der Quelle."""
+        listeners = self._realtime_listeners if realtime else self._listeners
+        listeners.append(listener)
 
         @callback
         def remove() -> None:
-            self._listeners.remove(listener)
+            listeners.remove(listener)
 
         return remove
 
@@ -147,12 +152,14 @@ class PVTracker:
         now = dt_util.utcnow()
         self._integrate(now)
         self._set_power(event.data["new_state"], now)
+        for listener in list(self._realtime_listeners):
+            listener()
 
     @callback
     def _async_tick(self, _now: datetime) -> None:
         self._integrate(dt_util.utcnow())
         self._store.async_delay_save(lambda: self.data, SAVE_DELAY)
-        for listener in list(self._listeners):
+        for listener in self._realtime_listeners + self._listeners:
             listener()
 
     # ------------------------------------------------------------------ Berechnung

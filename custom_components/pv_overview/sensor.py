@@ -31,6 +31,7 @@ KWH_PER_DAY = "kWh/d"
 class PVSensorDescription(SensorEntityDescription):
     value_fn: Callable[[PVTracker], StateType]
     attrs_fn: Callable[[PVTracker], dict[str, Any]] | None = None
+    realtime: bool = False
 
 
 def _energy(key: str, data_key: str, state_class: SensorStateClass | None, **kwargs: Any) -> PVSensorDescription:
@@ -59,6 +60,19 @@ def _average(key: str, days: int | None) -> PVSensorDescription:
 
 
 SENSORS: tuple[PVSensorDescription, ...] = (
+    # Normalisierte Leistung der Quelle in W – Grundlage aller Berechnungen
+    PVSensorDescription(
+        key="power",
+        translation_key="power",
+        device_class=SensorDeviceClass.POWER,
+        native_unit_of_measurement=UnitOfPower.WATT,
+        state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=0,
+        icon="mdi:solar-power",
+        realtime=True,
+        value_fn=lambda t: None if t.current_power is None else round(t.current_power, 1),
+        attrs_fn=lambda t: {"source": t.source_entity},
+    ),
     _energy("total", "total_kwh", SensorStateClass.TOTAL_INCREASING, icon="mdi:solar-power-variant"),
     _energy("today", "day_kwh", SensorStateClass.TOTAL_INCREASING, icon="mdi:solar-power"),
     _energy(
@@ -167,7 +181,11 @@ class PVOverviewSensor(SensorEntity):
         )
 
     async def async_added_to_hass(self) -> None:
-        self.async_on_remove(self._tracker.async_add_listener(self.async_write_ha_state))
+        self.async_on_remove(
+            self._tracker.async_add_listener(
+                self.async_write_ha_state, realtime=self.entity_description.realtime
+            )
+        )
 
     @property
     def native_value(self) -> StateType:
