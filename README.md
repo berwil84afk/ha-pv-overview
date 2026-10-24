@@ -1,6 +1,6 @@
-<img src="custom_components/pv_overview/brand/icon.png" alt="PV Übersicht" width="128" align="right">
+<img src="custom_components/pv_overview/brand/icon.png" alt="PV Summary" width="128" align="right">
 
-# PV Übersicht – Home Assistant Integration
+# PV Summary – Home Assistant Integration
 
 Du gibst nur **einen Sensor mit der aktuellen PV-Leistung** (W oder kW) an – die Integration rechnet daraus Energie und Statistiken.
 
@@ -8,15 +8,15 @@ Du gibst nur **einen Sensor mit der aktuellen PV-Leistung** (W oder kW) an – d
 
 1. HACS → Menü (⋮) → **Benutzerdefinierte Repositories**
 2. Repository `https://github.com/berwil84afk/ha-pv-overview`, Typ **Integration** → Hinzufügen
-3. „PV Übersicht“ in HACS suchen → Herunterladen → Home Assistant neu starten
-4. **Einstellungen → Geräte & Dienste → Integration hinzufügen → „PV Übersicht“**
+3. „PV Summary“ in HACS suchen → Herunterladen → Home Assistant neu starten
+4. **Einstellungen → Geräte & Dienste → Integration hinzufügen → „PV Summary“**
 
 ## Manuelle Installation
 
 1. Ordner `custom_components/pv_overview` nach `/config/custom_components/pv_overview` kopieren
    (z. B. mit dem File-Editor- oder Samba-Add-on).
 2. Home Assistant neu starten.
-3. **Einstellungen → Geräte & Dienste → Integration hinzufügen → „PV Übersicht“**.
+3. **Einstellungen → Geräte & Dienste → Integration hinzufügen → „PV Summary“**.
 4. Name, PV-Leistungssensor, Schwelle (Standard 10 W) und optional den bisherigen Zählerstand eingeben.
 
 Später änderbar über **Konfigurieren** an der Integration: Quellsensor und Schwelle.
@@ -45,9 +45,152 @@ Später änderbar über **Konfigurieren** an der Integration: Quellsensor und Sc
 - Der Tag der Ersteinrichtung ist unvollständig und zählt nicht in die Durchschnitte.
 - Daten liegen in `/config/.storage/pv_overview.<entry_id>` und überleben Neustarts.
 
-## Beispiel-Dashboard
+## Beispielkarten
 
-Entity-IDs ggf. anpassen (abhängig vom gewählten Namen, hier „PV Anlage“):
+Die Entity-IDs hängen vom Namen ab, den du beim Einrichten vergibst. In den Beispielen heißt die Anlage „PV Anlage“, daher das Präfix `sensor.pv_anlage_…`. Bei einem anderen Namen bitte anpassen.
+
+### Ausführliche Karte
+
+```yaml
+type: vertical-stack
+cards:
+  - type: heading
+    heading: PV-Anlage
+    icon: mdi:solar-power-variant
+    badges:
+      - type: entity
+        entity: sensor.pv_anlage_produktionszeit_heute
+        icon: mdi:timer-sand
+        color: grey
+  - type: gauge
+    entity: sensor.pv_anlage_aktuelle_leistung
+    name: Aktuelle Leistung
+    min: 0
+    max: 2000
+    needle: true
+    segments:
+      - from: 0
+        color: '#9e9e9e'
+      - from: 100
+        color: '#fbc02d'
+      - from: 600
+        color: '#ff9800'
+      - from: 1200
+        color: '#43a047'
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: tile
+        entity: sensor.pv_anlage_produktion_heute
+        name: Heute
+        icon: mdi:solar-power
+        color: amber
+      - type: tile
+        entity: sensor.pv_anlage_spitzenleistung_heute
+        name: Spitze heute
+        icon: mdi:flash
+        color: orange
+      - type: tile
+        entity: sensor.pv_anlage_durchschnittsleistung_heute
+        name: Ø Leistung
+        icon: mdi:chart-bell-curve-cumulative
+        color: yellow
+      - type: tile
+        entity: sensor.pv_anlage_produktion_gestern
+        name: Gestern
+        icon: mdi:calendar-arrow-left
+        color: grey
+  - type: history-graph
+    title: Leistungsverlauf
+    hours_to_show: 24
+    entities:
+      - entity: sensor.pv_anlage_aktuelle_leistung
+        name: Leistung
+  - type: heading
+    heading: Produktion
+    heading_style: subtitle
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: tile
+        entity: sensor.pv_anlage_produktion_diese_woche
+        name: Diese Woche
+        icon: mdi:calendar-week
+        color: light-green
+      - type: tile
+        entity: sensor.pv_anlage_produktion_dieser_monat
+        name: Dieser Monat
+        icon: mdi:calendar-month
+        color: green
+      - type: tile
+        entity: sensor.pv_anlage_produktion_letzter_monat
+        name: Letzter Monat
+        icon: mdi:calendar-arrow-left
+        color: teal
+      - type: tile
+        entity: sensor.pv_anlage_produktion_dieses_jahr
+        name: Dieses Jahr
+        icon: mdi:calendar-star
+        color: cyan
+      - type: tile
+        entity: sensor.pv_anlage_gesamtproduktion
+        name: Gesamt
+        icon: mdi:sigma
+        color: blue
+  - type: statistics-graph
+    title: Tagesproduktion (30 Tage)
+    entities:
+      - entity: sensor.pv_anlage_produktion_heute
+        name: Produktion
+    stat_types:
+      - max
+    period: day
+    days_to_show: 30
+    chart_type: bar
+  - type: heading
+    heading: Durchschnitt & Rekorde
+    heading_style: subtitle
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - type: tile
+        entity: sensor.pv_anlage_o_tagesproduktion_7_tage
+        name: Ø 7 Tage
+        icon: mdi:numeric-7-box-outline
+        color: purple
+        vertical: true
+      - type: tile
+        entity: sensor.pv_anlage_o_tagesproduktion_30_tage
+        name: Ø 30 Tage
+        icon: mdi:calendar-range
+        color: deep-purple
+        vertical: true
+      - type: tile
+        entity: sensor.pv_anlage_o_tagesproduktion_gesamt
+        name: Ø Gesamt
+        icon: mdi:chart-line
+        color: indigo
+        vertical: true
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: tile
+        entity: sensor.pv_anlage_bester_tag
+        name: Bester Tag
+        icon: mdi:trophy
+        color: amber
+      - type: tile
+        entity: sensor.pv_anlage_spitzenleistung_rekord
+        name: Leistungsrekord
+        icon: mdi:trophy-award
+        color: red
+```
+
+### Kompakte Karte
 
 ```yaml
 type: vertical-stack
@@ -64,7 +207,7 @@ cards:
       - entity: sensor.pv_anlage_produktionszeit_heute
         name: Laufzeit
   - type: entities
-    title: PV Übersicht
+    title: PV Summary
     entities:
       - sensor.pv_anlage_gesamtproduktion
       - sensor.pv_anlage_produktion_gestern
